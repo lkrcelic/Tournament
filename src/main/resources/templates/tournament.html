@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tournament</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1em 0;
+            text-align: center;
+            margin: 0;
+        }
+
+        table {
+            width: 80%;
+            margin: 1em auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 0.75em;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .rounds {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 2em 0;
+        }
+
+        .round {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 1em;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<h1 th:text="${tournament.name}">Tournament Name</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Wins</th>
+        <th>Losses</th>
+        <th>Draws</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="participant : ${participants}">
+        <td th:text="${participant.name}">Participant Name</td>
+        <td th:text="${participant.wins}">Wins</td>
+        <td th:text="${participant.losses}">Losses</td>
+        <td th:text="${participant.draws}">Draws</td>
+</tr>
+</tbody>
+</table>
+
+<div class="rounds">
+    <div th:each="round, roundIndex : ${rounds}" class="round">
+        <h2 th:text="'Round ' + ${roundIndex.count}"></h2>
+        <ul>
+            <li th:each="pairing : ${round.pairings}">
+                <span th:text="${pairing.participant1.name} + ' vs ' + ${pairing.participant2.name}"></span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

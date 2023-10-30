@@ -1,10 +1,26 @@
-package web2.lab.prvi.domain;
+package web2.tournament.domain;
 
-import java.util.Set;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.List;
+import java.util.UUID;
+
+@Getter
+@Setter
+@Entity
+@Table(name = "tournament")
 public class Tournament {
 
-    private long id;
+    @Id
+    @GeneratedValue(generator = "UUID")
+    private UUID id;
 
     private String name;
 
@@ -14,8 +30,9 @@ public class Tournament {
 
     private long losingPoints;
 
-    private AppUser creator;
+    private String creatorId;
 
-    private Set<Participant> participants;
+    @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL)
+    private List<Participant> participants;
 
 }

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+
+<style>
+    .container {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-right: 10px;
+    }
+</style>
+
+<head>
+    <title>Create Tournament</title>
+</head>
+
+<body>
+
+<div id="page" layout:fragment="content">
+    <div class="container">
+        <form action="/createTournament" method="post" th:object="${tournament}">
+            <div class="form-group">
+                <label for="name">Tournament Name:</label>
+                <input type="text" id="name" name="name" th:field="*{name}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="winningPoints">Winning Points:</label>
+                <input type="number" id="winningPoints" name="winningPoints" th:field="*{winningPoints}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="drawPoints">Draw Points:</label>
+                <input type="number" id="drawPoints" name="drawPoints" step="any" th:field="*{drawPoints}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="losingPoints">Losing Points:</label>
+                <input type="number" id="losingPoints" name="losingPoints" th:field="*{losingPoints}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Participants:</label>
+                <div id="participants-list">
+                </div>
+                <input type="text" id="participant-input">
+                <button type="button" onclick="
+                   const participantsDiv = document.getElementById('participants-list');
+                    const participantInput = document.getElementById('participant-input');
+                    const newParticipant = participantInput.value;
+
+                    if (newParticipant) {
+                        const newParticipantDiv = document.createElement('div');
+                        newParticipantDiv.textContent = newParticipant;
+                        participantsDiv.appendChild(newParticipantDiv);
+
+                        const newParticipantInput = document.createElement('input');
+                        newParticipantInput.type = 'hidden';
+                        newParticipantInput.name = 'participants';
+                        newParticipantInput.value = newParticipant;
+                        participantsDiv.appendChild(newParticipantInput);
+
+                        participantInput.value = '';
+                    }">Add Participant</button>
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Create Tournament</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+
+</html>
